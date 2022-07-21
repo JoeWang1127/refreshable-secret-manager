@@ -19,11 +19,12 @@ public class WebController {
   @GetMapping("/getSecret")
   @ResponseBody
   public String getSecret() {
-    String secretId = secretManager.getSecretString(secretProvider.getSecret());
+   // String secretId = secretManager.getSecretString(secretProvider.getSecret());
+    String secret = secretProvider.getSecret();
     return "Secret ID: "
-        + HtmlUtils.htmlEscape(secretId)
+        + HtmlUtils.htmlEscape(secret)
         + " | Value: "
-        + secretId
+        + secret
         + "<br/><br/><a href='/'>Go back</a>";
   }
 }

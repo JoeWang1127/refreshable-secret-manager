@@ -6,4 +6,4 @@ management:
       exposure:
         include: refresh, configprops
 application:
-  secret: "sm://demo-secret"
+  secret: ${sm://demo-secret}

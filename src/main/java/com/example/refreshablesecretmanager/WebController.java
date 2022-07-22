@@ -1,5 +1,6 @@
 package com.example.refreshablesecretmanager;
 
+import com.google.cloud.spring.secretmanager.SecretManagerOperations;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -7,10 +8,15 @@ import org.springframework.web.util.HtmlUtils;
 
 @Controller
 public class WebController {
+  private final SecretManagerOperations secretManagerOperations;
   private final SecretProvider secretProvider;
   private final SecretProvider2 secretProvider2;
 
-  public WebController(SecretProvider secretProvider, SecretProvider2 secretProvider2) {
+  public WebController(
+      SecretManagerOperations secretManagerOperations,
+      SecretProvider secretProvider,
+      SecretProvider2 secretProvider2) {
+    this.secretManagerOperations = secretManagerOperations;
     this.secretProvider = secretProvider;
     this.secretProvider2 = secretProvider2;
   }
@@ -18,12 +24,12 @@ public class WebController {
   @GetMapping("/getSecret")
   @ResponseBody
   public String getSecret() {
-    // String secretId = secretProvider.getSecret();
-    String secretId = secretProvider2.getSecret();
+    // String secret = secretManagerOperations.getSecretString(secretProvider.getSecretId());
+    String secret = secretManagerOperations.getSecretString(secretProvider2.getSecretId());
     return "Secret ID: "
-        + HtmlUtils.htmlEscape(secretId)
+        + HtmlUtils.htmlEscape(secret)
         + " | Value: "
-        + secretId
+        + secret
         + "<br/><br/><a href='/'>Go back</a>";
   }
 }

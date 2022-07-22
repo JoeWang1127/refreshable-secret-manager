@@ -6,11 +6,11 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RefreshScope
-public class SecretProvider {
-  @Value("${application.secret}")
-  private String secret;
+public class SecretProvider implements SecretIdProvider {
+  @Value("${application.secret-id}")
+  private String secretId;
 
-  public String getSecret() {
-    return secret;
+  public String getSecretId() {
+    return secretId;
   }
 }
